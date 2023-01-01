@@ -152,7 +152,7 @@ const ConicBackground = styled.div`
     var(--tertiaryColor) 360deg
   );
   filter: blur(150px);
-  opacity: 0.25;
+  opacity: 0.2;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
