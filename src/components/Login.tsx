@@ -68,6 +68,7 @@ const Login = () => {
               Save
             </Button>
           </FormStyled>
+          <ConicBackground />
         </Wrapper>
       )}
     </>
@@ -121,4 +122,24 @@ const InputField = styled.input`
     /* outline-color: hsl(305, 56%, 55%); */
     outline: none;
   }
+`;
+
+const ConicBackground = styled.div`
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--primaryColor) 0deg,
+    var(--secondaryColor) 180deg,
+    var(--tertiaryColor) 360deg
+  );
+  filter: blur(150px);
+  opacity: 0.2;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  pointer-events: none;
 `;
