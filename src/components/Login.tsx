@@ -1,11 +1,12 @@
 import { ipcRenderer } from "electron";
 import { SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+
+import Button from "./ui/Button";
 
 import { storeGet, storeSet } from "@/store/main";
-import styled from "styled-components";
-import Button from "./ui/Button";
-import { motion } from "framer-motion";
 
 const Login = () => {
   const [siteId, setSiteId] = useState("");
@@ -15,9 +16,15 @@ const Login = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    storeSet("siteId", siteId);
-    storeSet("apiKey", apiKey);
-    navigate("/app");
+    try {
+      storeSet("siteId", siteId);
+      storeSet("apiKey", apiKey);
+      navigate("/app");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
   };
 
   ipcRenderer.send("login-screen");

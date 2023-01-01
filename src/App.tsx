@@ -1,14 +1,9 @@
 import styled from "styled-components";
-import { FiRefreshCw, FiSettings } from "react-icons/fi";
-import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ipcRenderer } from "electron";
-import { Link, redirect } from "react-router-dom";
 
-import usePlausibleRealtimeData from "./hooks/usePlausibleRealtimeData";
 import usePlausibleData from "./hooks/usePlausibleData";
 
-import { storeDelete, storeGet } from "./store/main";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -21,9 +16,9 @@ function App() {
       <Wrapper>
         <Container>
           <Navbar />
-          <StatsContainer>
+          <ContentContainer>
             <Title>An error occured</Title>
-          </StatsContainer>
+          </ContentContainer>
           <ConicBackground />
         </Container>
       </Wrapper>
@@ -34,11 +29,11 @@ function App() {
     <Wrapper>
       <Container>
         <Navbar />
-        <StatsContainer>
+        <ContentContainer>
           {isLoading || isFetching ? (
             <Title>Loading...</Title>
           ) : (
-            <Stats
+            <Content
               initial={{
                 opacity: 0,
               }}
@@ -72,9 +67,9 @@ function App() {
                   }).format(Number(data?.pageviews?.value))}
                 </Value>
               </div>
-            </Stats>
+            </Content>
           )}
-        </StatsContainer>
+        </ContentContainer>
         <ConicBackground />
       </Container>
     </Wrapper>
@@ -97,7 +92,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const StatsContainer = styled.div`
+const ContentContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -114,7 +109,7 @@ const StatsContainer = styled.div`
   box-shadow: 0 0.4rem 5rem rgba(131, 82, 253, 0.05);
 `;
 
-const Stats = styled(motion.div)`
+const Content = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,7 +152,7 @@ const ConicBackground = styled.div`
     var(--tertiaryColor) 360deg
   );
   filter: blur(150px);
-  opacity: 0.22;
+  opacity: 0.35;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);

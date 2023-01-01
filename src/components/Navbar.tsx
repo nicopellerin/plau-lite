@@ -18,13 +18,22 @@ const Navbar = () => {
 
   const client = useQueryClient();
 
+  const handleRefresh = () => {
+    client.refetchQueries(["plausibleData", storeGet("siteId")]);
+    client.refetchQueries(["plausibleRealtimeData", storeGet("siteId")]);
+  };
+
+  const handleLogout = () => {
+    storeDelete("siteId");
+    storeDelete("apiKey");
+  };
+
   return (
     <Wrapper>
       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
         <SiteIdTitle>{storeGet("siteId")}</SiteIdTitle>
         {!isLoadingRealtime && !isFetchingRealtime && (
-          <motion.div
-            style={{ display: "flex", gap: 6, alignItems: "center" }}
+          <Group
             initial={{
               opacity: 0,
             }}
@@ -34,33 +43,23 @@ const Navbar = () => {
             }}
           >
             {error ? (
-              <div
+              <StatusCircle
                 style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: 8,
                   background: "crimson",
                 }}
               />
             ) : (
-              <div
+              <StatusCircle
                 style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: 8,
                   background: "var(--success)",
                 }}
               />
             )}
-            <span
-              style={{ fontSize: "1.4rem", lineHeight: 1, fontWeight: 700 }}
-            >
-              {dataRealtime}
-            </span>
-          </motion.div>
+            <RealtimeText>{dataRealtime}</RealtimeText>
+          </Group>
         )}
       </div>
-      <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+      <Group>
         <motion.button
           title="Refresh"
           whileTap={{
@@ -75,13 +74,7 @@ const Navbar = () => {
             border: "none",
             cursor: "pointer",
           }}
-          onClick={() => {
-            client.refetchQueries(["plausibleData", storeGet("siteId")]);
-            client.refetchQueries([
-              "plausibleRealtimeData",
-              storeGet("siteId"),
-            ]);
-          }}
+          onClick={handleRefresh}
         >
           <FiRefreshCw size={16} color="var(--primaryColorLighter)" />
         </motion.button>
@@ -96,16 +89,14 @@ const Navbar = () => {
               background: "none",
               border: "none",
               cursor: "pointer",
+              marginTop: 1,
             }}
-            onClick={() => {
-              storeDelete("siteId");
-              storeDelete("apiKey");
-            }}
+            onClick={handleLogout}
           >
             <FiSettings size={16} color="var(--primaryColorLighter)" />
           </motion.button>
         </Link>
-      </div>
+      </Group>
     </Wrapper>
   );
 };
@@ -131,4 +122,23 @@ const Wrapper = styled.nav`
   border-bottom: 1px solid var(--toolsBorder);
   background: var(--inputBackground);
   color: var(--headingColor);
+`;
+
+const Group = styled(motion.div)`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+`;
+
+const RealtimeText = styled.span`
+  font-size: 1.4rem;
+  line-height: 1;
+  font-weight: 700;
+  user-select: none;
+`;
+
+const StatusCircle = styled.div`
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
 `;
