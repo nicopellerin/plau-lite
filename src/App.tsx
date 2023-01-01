@@ -1,63 +1,31 @@
 import styled from "styled-components";
-import { SyntheticEvent, useState } from "react";
 import { FiRefreshCw, FiSettings } from "react-icons/fi";
 import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-
-import Button from "./components/ui/Button";
+import { ipcRenderer } from "electron";
+import { Link, redirect } from "react-router-dom";
 
 import usePlausibleRealtimeData from "./hooks/usePlausibleRealtimeData";
 import usePlausibleData from "./hooks/usePlausibleData";
 
-import { storeGet, storeSet } from "./store/main";
+import { storeDelete, storeGet } from "./store/main";
+import Navbar from "./components/Navbar";
 
 function App() {
+  ipcRenderer.send("main-screen");
+
   const { data, error, isLoading, isFetching } = usePlausibleData();
-  const {
-    data: dataRealtime,
-    isLoading: isLoadingRealtime,
-    isFetching: isFetchingRealtime,
-  } = usePlausibleRealtimeData();
 
-  const client = useQueryClient();
-
-  const [siteId, setSiteId] = useState("");
-  const [apiKey, setApiKey] = useState("");
-
-  const onSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    storeSet("siteId", siteId);
-    storeSet("apiKey", apiKey);
-  };
-
-  if (!storeGet("siteId")) {
+  if (error) {
     return (
       <Wrapper>
-        <FormStyled onSubmit={onSubmit}>
-          <FormTitle>Enter credentials</FormTitle>
-          <InputFieldWrapper>
-            <Label>Site id</Label>
-            <InputField
-              value={siteId}
-              onChange={(e) => setSiteId(e.target.value)}
-            />
-          </InputFieldWrapper>
-          <InputFieldWrapper>
-            <Label>API key</Label>
-            <InputField
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-            />
-          </InputFieldWrapper>
-          <Button
-            style={{
-              marginTop: 8,
-            }}
-          >
-            Save
-          </Button>
-        </FormStyled>
+        <Container>
+          <Navbar />
+          <StatsContainer>
+            <Title>An error occured</Title>
+          </StatsContainer>
+          <ConicBackground />
+        </Container>
       </Wrapper>
     );
   }
@@ -65,75 +33,7 @@ function App() {
   return (
     <Wrapper>
       <Container>
-        <Navbar>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <SiteIdTitle>{storeGet("siteId")}</SiteIdTitle>
-            {!isLoadingRealtime && !isFetchingRealtime && (
-              <motion.div
-                style={{ display: "flex", gap: 6, alignItems: "center" }}
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  duration: 0.2,
-                }}
-              >
-                <div
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: 8,
-                    background: "var(--success)",
-                  }}
-                />
-                <span
-                  style={{ fontSize: "1.4rem", lineHeight: 1, fontWeight: 700 }}
-                >
-                  {dataRealtime}
-                </span>
-              </motion.div>
-            )}
-          </div>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <motion.button
-              whileTap={{
-                rotate: 360,
-              }}
-              transition={{
-                type: "spring",
-                damping: 20,
-              }}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                client.refetchQueries(["plausibleData", storeGet("siteId")]);
-                client.refetchQueries([
-                  "plausibleRealtimeData",
-                  storeGet("siteId"),
-                ]);
-              }}
-            >
-              <FiRefreshCw size={16} color="var(--primaryColorLighter)" />
-            </motion.button>
-            <motion.button
-              transition={{
-                type: "spring",
-                damping: 20,
-              }}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              <FiSettings size={16} color="var(--primaryColorLighter)" />
-            </motion.button>
-          </div>
-        </Navbar>
+        <Navbar />
         <StatsContainer>
           {isLoading || isFetching ? (
             <Title>Loading...</Title>
@@ -238,76 +138,11 @@ const Title = styled.h2`
   user-select: none;
 `;
 
-const FormStyled = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  padding: var(--spacer-32) var(--spacer-48) var(--spacer-24);
-`;
-
-const FormTitle = styled.h2`
-  margin-top: 0;
-  font-size: 2.8rem;
-  margin-bottom: 20px;
-`;
-
 const Value = styled.span`
   font-size: 3.2rem;
   color: var(--textColor);
   font-weight: 900;
   user-select: none;
-`;
-
-const InputFieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: hsl(305, 56%, 55%);
-`;
-
-const InputField = styled.input`
-  border: 1px solid var(--inputBorder);
-  color: var(---textColor);
-  background: var(--inputBackground);
-  padding: 0.8em 0.8em;
-  border-radius: var(--border-radius-4);
-  font-size: 1.6rem;
-  font-family: inherit;
-  margin-bottom: 1.6rem;
-  -webkit-appearance: none;
-
-  &:focus {
-    border: 1px solid transparent;
-    outline-color: hsl(305, 56%, 55%);
-  }
-`;
-
-const SiteIdTitle = styled.h1`
-  font-size: 1.6rem;
-  color: var(--primaryColorLighter);
-  line-height: 1;
-  font-weight: 700;
-  margin: 0;
-  user-select: none;
-`;
-
-const Navbar = styled.nav`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: var(--spacer-16) var(--spacer-24);
-  padding-top: 34px;
-  border-bottom: 1px solid var(--toolsBorder);
-  background: var(--inputBackground);
-  color: var(--headingColor);
 `;
 
 const ConicBackground = styled.div`

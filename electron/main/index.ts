@@ -54,13 +54,13 @@ async function createWindow() {
     },
     width: 400,
     height: 235,
-    resizable: false,
+    // resizable: false,
     titleBarStyle: "hidden",
-    // frame: false,
   });
 
   win.setMenu(null);
   win.setTitle("Plausible Analytics");
+  win.setBackgroundColor("#001");
 
   if (process.env.VITE_DEV_SERVER_URL) {
     // electron-vite-vue#298
@@ -122,4 +122,12 @@ ipcMain.handle("open-win", (_, arg) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: arg });
   }
+});
+
+ipcMain.on("login-screen", (event, arg) => {
+  win.setSize(400, 320);
+});
+
+ipcMain.on("main-screen", (event, arg) => {
+  win.setSize(400, 235);
 });

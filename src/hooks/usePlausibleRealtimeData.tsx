@@ -22,6 +22,7 @@ function usePlausibleRealtimeData() {
     },
     {
       enabled: !!siteId && !!apiKey,
+      staleTime: 1000 * 3,
     }
   );
 }
