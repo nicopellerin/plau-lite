@@ -22,7 +22,7 @@ function usePlausibleData() {
     },
     {
       enabled: !!siteId && !!apiKey,
-      staleTime: 1000 * 5,
+      staleTime: 1000 * 5 * 60,
     }
   );
 }

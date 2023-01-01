@@ -7,7 +7,7 @@ ${normalize()}
 :root {
   --primaryBaseHue: 305;
   --primaryButtonColor: hsl(var(--primaryBaseHue), 56%, 55%);
-  --primaryColor: hsl(305, 56%, 55%);
+  --primaryColor: #8352FD;
   --primaryColorDark: hsl(305, 56%, 35%);
   --primaryColorLight: hsl(305, 56%, 75%);
   --primaryColorLighter: hsl(305, 56%, 85%);

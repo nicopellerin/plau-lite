@@ -62,6 +62,7 @@ const Navbar = () => {
       </div>
       <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
         <motion.button
+          title="Refresh"
           whileTap={{
             rotate: 360,
           }}
@@ -86,6 +87,7 @@ const Navbar = () => {
         </motion.button>
         <Link to="/">
           <motion.button
+            title="Log out"
             transition={{
               type: "spring",
               damping: 20,

@@ -1,9 +1,9 @@
 {
-  "name": "electron-vite-react",
-  "version": "2.1.0",
+  "name": "plaulite",
+  "version": "0.1.0",
   "main": "dist-electron/main/index.js",
   "description": "Electron Vite React boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "author": "Nico Pellerin",
   "license": "MIT",
   "private": true,
   "debug": {
@@ -36,17 +36,14 @@
   },
   "dependencies": {
     "@fontsource/inter": "^4.5.14",
-    "@fontsource/space-grotesk": "^4.5.10",
     "@tanstack/react-query": "^4.20.4",
     "axios": "^1.2.2",
     "date-fns": "^2.29.3",
-    "electron-store": "^8.1.0",
     "framer-motion": "^8.0.2",
     "polished": "^4.2.2",
     "react-hook-form": "^7.41.3",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.1",
-    "styled-components": "^5.3.6",
-    "zustand": "^4.1.5"
+    "styled-components": "^5.3.6"
   }
 }
