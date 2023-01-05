@@ -45,7 +45,7 @@ const Login = () => {
         >
           <FormStyled onSubmit={onSubmit}>
             <InputFieldWrapper>
-              <Label>Site id (domain)</Label>
+              <Label>Site ID (Domain)</Label>
               <InputField
                 value={siteId}
                 onChange={(e) => setSiteId(e.target.value)}
@@ -53,7 +53,7 @@ const Login = () => {
               />
             </InputFieldWrapper>
             <InputFieldWrapper>
-              <Label>API key</Label>
+              <Label>API Key</Label>
               <InputField
                 type="password"
                 value={apiKey}
@@ -68,7 +68,7 @@ const Login = () => {
               Save
             </Button>
           </FormStyled>
-          <ConicBackground />
+          <LinearBackground />
         </Wrapper>
       )}
     </>
@@ -102,7 +102,7 @@ const InputFieldWrapper = styled.div`
 const Label = styled.label`
   font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   color: var(--primaryColorLighter);
 `;
 
@@ -124,19 +124,17 @@ const InputField = styled.input`
   }
 `;
 
-const ConicBackground = styled.div`
+const LinearBackground = styled.div`
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    var(--primaryColor) 0deg,
-    var(--secondaryColor) 180deg,
-    var(--tertiaryColor) 360deg
+  background: linear-gradient(
+    135deg,
+    var(--primaryColor),
+    var(--secondaryColor)
   );
-  filter: blur(150px);
-  opacity: 0.2;
+  opacity: 0.1;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);

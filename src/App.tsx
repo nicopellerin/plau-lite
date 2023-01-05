@@ -19,7 +19,7 @@ function App() {
           <ContentContainer>
             <Title>An error occured</Title>
           </ContentContainer>
-          <ConicBackground />
+          <LinearBackground />
         </Container>
       </Wrapper>
     );
@@ -70,7 +70,7 @@ function App() {
             </Content>
           )}
         </ContentContainer>
-        <ConicBackground />
+        <LinearBackground />
       </Container>
     </Wrapper>
   );
@@ -99,11 +99,6 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(
-    -45deg,
-    var(--inputBackground) 50%,
-    var(--inputBackground)
-  );
   padding: var(--spacer-20);
   border-bottom: 5px solid var(--toolsBorder);
   box-shadow: 0 0.4rem 5rem rgba(131, 82, 253, 0.05);
@@ -140,19 +135,17 @@ const Value = styled.span`
   user-select: none;
 `;
 
-const ConicBackground = styled.div`
+const LinearBackground = styled.div`
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    var(--primaryColor) 0deg,
-    var(--secondaryColor) 180deg,
-    var(--tertiaryColor) 360deg
+  background: linear-gradient(
+    135deg,
+    var(--primaryColor),
+    var(--secondaryColor)
   );
-  filter: blur(150px);
-  opacity: 0.2;
+  opacity: 0.13;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);

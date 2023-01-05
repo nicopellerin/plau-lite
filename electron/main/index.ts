@@ -59,7 +59,7 @@ async function createWindow() {
   });
 
   win.setMenu(null);
-  win.setTitle("Plausible Analytics");
+  win.setTitle("PlauLite");
   win.setBackgroundColor("#001");
 
   if (process.env.VITE_DEV_SERVER_URL) {
