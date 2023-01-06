@@ -39,7 +39,7 @@ function App() {
               }}
               animate={{ opacity: 1 }}
               transition={{
-                duration: 0.3,
+                duration: 0.15,
               }}
             >
               <div>
