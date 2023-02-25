@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 
 import Button from "./ui/Button";
 
+import Logo from "@/assets/plaulite-logo.svg";
+
 import { storeGet, storeSet } from "@/store/main";
 
 interface FormValues {
@@ -54,11 +56,13 @@ const Login = () => {
         >
           <FormStyled onSubmit={handleSubmit(onSubmit)}>
             <img
-              src="/plaulite-logo.svg"
-              alt=""
+              src={Logo}
+              alt="Logo"
               width="150"
+              draggable={false}
               style={{
                 marginBottom: 24,
+                userSelect: "none",
               }}
             />
             <InputFieldWrapper>
