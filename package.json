@@ -2,7 +2,7 @@
   "name": "plaulite",
   "version": "0.1.0",
   "main": "dist-electron/main/index.js",
-  "description": "Electron Vite React boilerplate.",
+  "description": "Tiny app to get your daily unique visitors & page views from Plausible",
   "author": "Nico Pellerin",
   "license": "MIT",
   "private": true,
@@ -41,7 +41,7 @@
     "date-fns": "^2.29.3",
     "framer-motion": "^8.0.2",
     "polished": "^4.2.2",
-    "react-hook-form": "^7.41.3",
+    "react-hook-form": "^7.43.2",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.1",
     "styled-components": "^5.3.6"

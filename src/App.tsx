@@ -42,31 +42,31 @@ function App() {
                 duration: 0.15,
               }}
             >
-              <div>
+              <ContentItem>
                 <Title>Unique Visitors</Title>
                 <Value>
                   {new Intl.NumberFormat("en-US", {
                     maximumSignificantDigits: 3,
-                  }).format(Number(data?.visitors?.value))}
+                  }).format(Number(data.visitors.value))}
                 </Value>
-              </div>
+              </ContentItem>
               <div
                 style={{
-                  margin: "0 16px",
+                  // margin: "0 16px",
                   width: "1px",
                   height: "100%",
                   background: "var(--toolsBorder)",
                 }}
               />
 
-              <div>
+              <ContentItem>
                 <Title>Page Views</Title>
                 <Value>
                   {new Intl.NumberFormat("en-US", {
                     maximumSignificantDigits: 3,
-                  }).format(Number(data?.pageviews?.value))}
+                  }).format(Number(data.pageviews.value))}
                 </Value>
-              </div>
+              </ContentItem>
             </Content>
           )}
         </ContentContainer>
@@ -100,21 +100,23 @@ const ContentContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: var(--spacer-20);
-  border-bottom: 5px solid var(--toolsBorder);
   box-shadow: 0 0.4rem 5rem rgba(131, 82, 253, 0.05);
 `;
 
 const Content = styled(motion.div)`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   height: 100%;
   width: 100%;
-  gap: 24px;
   text-align: center;
   background: var(--inputBackground);
   border-radius: var(--border-radius-4);
   border: 1px solid var(--toolsBorder);
+`;
+
+const ContentItem = styled.div`
+  justify-self: center;
 `;
 
 const Title = styled.h2`
@@ -123,7 +125,7 @@ const Title = styled.h2`
   font-size: 1.2rem;
   text-transform: uppercase;
   color: var(--primaryColorLighter);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   font-weight: 600;
   user-select: none;
 `;
@@ -145,7 +147,7 @@ const LinearBackground = styled.div`
     var(--primaryColor),
     var(--secondaryColor)
   );
-  opacity: 0.13;
+  opacity: 0.125;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);

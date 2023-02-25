@@ -1,21 +1,30 @@
 import { ipcRenderer } from "electron";
-import { SyntheticEvent, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 
 import Button from "./ui/Button";
 
 import { storeGet, storeSet } from "@/store/main";
 
-const Login = () => {
-  const [siteId, setSiteId] = useState("");
-  const [apiKey, setApiKey] = useState("");
+interface FormValues {
+  siteId: string;
+  apiKey: string;
+}
 
+const Login = () => {
   const navigate = useNavigate();
 
-  const onSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    const { siteId, apiKey } = data;
+
     try {
       storeSet("siteId", siteId);
       storeSet("apiKey", apiKey);
@@ -43,26 +52,78 @@ const Login = () => {
             duration: 0.3,
           }}
         >
-          <FormStyled onSubmit={onSubmit}>
+          <FormStyled onSubmit={handleSubmit(onSubmit)}>
+            <img
+              src="/plaulite-logo.svg"
+              alt=""
+              width="150"
+              style={{
+                marginBottom: 24,
+              }}
+            />
             <InputFieldWrapper>
               <Label>Site ID (Domain)</Label>
               <InputField
-                value={siteId}
-                onChange={(e) => setSiteId(e.target.value)}
+                {...register("siteId", {
+                  required: true,
+                  pattern:
+                    /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/,
+                })}
                 autoCorrect="off"
+                placeholder="example.com"
               />
+              {errors?.siteId && (
+                <ErrorWrapper>
+                  <ErrorText
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.15,
+                    }}
+                  >
+                    Please enter a valid domain
+                  </ErrorText>
+                </ErrorWrapper>
+              )}
             </InputFieldWrapper>
             <InputFieldWrapper>
-              <Label>API Key</Label>
+              <Label>API key</Label>
               <InputField
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
+                {...register("apiKey", {
+                  required: true,
+                  validate: (value) => value.length === 64,
+                })}
               />
+              {errors?.apiKey && (
+                <ErrorWrapper>
+                  <ErrorText
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                      duration: 0.15,
+                    }}
+                  >
+                    API key must be 64 characters long
+                  </ErrorText>
+                </ErrorWrapper>
+              )}
             </InputFieldWrapper>
             <Button
               style={{
                 marginTop: 8,
+              }}
+              whileHover={{
+                scale: 1.01,
+              }}
+              whileTap={{
+                scale: 0.99,
+              }}
+              transition={{
+                duration: 0.3,
               }}
             >
               Save
@@ -97,6 +158,7 @@ const InputFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 `;
 
 const Label = styled.label`
@@ -114,12 +176,15 @@ const InputField = styled.input`
   border-radius: var(--border-radius-4);
   font-size: 1.6rem;
   font-family: inherit;
-  margin-bottom: 1.6rem;
+  margin-bottom: 20px;
   -webkit-appearance: none;
 
+  &::placeholder {
+    color: var(--primaryColorLighter);
+    opacity: 0.5;
+  }
+
   &:focus {
-    /* border: 1px solid transparent; */
-    /* outline-color: hsl(305, 56%, 55%); */
     outline: none;
   }
 `;
@@ -130,7 +195,7 @@ const LinearBackground = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(
-    135deg,
+    -135deg,
     var(--primaryColor),
     var(--secondaryColor)
   );
@@ -140,4 +205,15 @@ const LinearBackground = styled.div`
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   pointer-events: none;
+`;
+
+const ErrorWrapper = styled.div`
+  position: absolute;
+  color: crimson;
+  bottom: 0;
+  left: 0;
+`;
+
+const ErrorText = styled(motion.span)`
+  font-size: 1.2rem;
 `;

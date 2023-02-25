@@ -13,28 +13,23 @@ ${normalize()}
   --primaryColorLighter: hsl(305, 56%, 85%);
   --primaryColorLighter2: hsl(305, 56%, 95%, 1);
 
-  --secondaryColor: hsl(333, 65%, 62%);
+  --secondaryColor: hsl(333, 65%, 55%);
   --secondaryColorDark: hsl(333, 65%, 42%);
   --secondaryColorLight: hsl(333, 65%, 82%);
   --secondaryColorLighter: hsl(333, 65%, 92%);
 
-  --tertiaryColor: hsl(213, 66%, 66%);
   --textColor: var(--primaryColorLighter2);
   --headingColor: var(--primaryColorLight);
 
   --backgroundColor: #001;
 
-  --borderColor: hsla(305, 56%, 85%, 0.15);
-
   --inputBackground: hsla(305, 56%, 35%, 0.08);
   --inputBorder: hsla(305, 56%, 35%, 0.3);
-  --inputText: var(---textColor);
 
   --success: hsl(123, 65%, 42%);
 
   --toolsBorder: hsla(305, 26%, 20%, 0.35);
   --toolsBackground: hsla(305, 26%, 20%, 0.2);
-
 
   /* Fonts */
   --mainFont: "InterVariable", sans-serif;

@@ -22,6 +22,7 @@ const Button = styled(motion.button)`
   font-weight: 600;
   display: flex;
   align-items: center;
+  gap: 6px;
   cursor: pointer;
   will-change: transform;
   filter: ${({ variant = "primary" }: StyleProps) =>

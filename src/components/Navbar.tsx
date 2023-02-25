@@ -1,8 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { FiRefreshCw, FiSettings } from "react-icons/fi";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaSignOutAlt } from "react-icons/fa";
+import { HiRefresh } from "react-icons/hi";
 
 import usePlausibleRealtimeData from "@/hooks/usePlausibleRealtimeData";
 
@@ -41,6 +42,9 @@ const Navbar = () => {
             transition={{
               duration: 0.1,
             }}
+            style={{
+              marginTop: 1,
+            }}
           >
             {error ? (
               <StatusCircle
@@ -73,10 +77,11 @@ const Navbar = () => {
             background: "none",
             border: "none",
             cursor: "pointer",
+            transformOrigin: "50% 50%",
           }}
           onClick={handleRefresh}
         >
-          <FiRefreshCw size={16} color="var(--primaryColorLighter)" />
+          <HiRefresh size={18} color="var(--primaryColorLighter)" />
         </motion.button>
         <Link to="/">
           <motion.button
@@ -89,11 +94,11 @@ const Navbar = () => {
               background: "none",
               border: "none",
               cursor: "pointer",
-              marginTop: 1,
+              marginTop: 2,
             }}
             onClick={handleLogout}
           >
-            <FiSettings size={16} color="var(--primaryColorLighter)" />
+            <FaSignOutAlt size={16} color="var(--primaryColorLighter)" />
           </motion.button>
         </Link>
       </Group>
@@ -102,15 +107,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-const SiteIdTitle = styled.h1`
-  font-size: 1.6rem;
-  color: var(--primaryColorLighter);
-  line-height: 1;
-  font-weight: 700;
-  margin: 0;
-  user-select: none;
-`;
 
 const Wrapper = styled.nav`
   display: flex;
@@ -122,6 +118,16 @@ const Wrapper = styled.nav`
   border-bottom: 1px solid var(--toolsBorder);
   background: var(--inputBackground);
   color: var(--headingColor);
+  box-shadow: 0 0.4rem 5rem rgba(131, 82, 253, 0.05);
+`;
+
+const SiteIdTitle = styled.h1`
+  font-size: 1.6rem;
+  color: var(--primaryColorLighter);
+  line-height: 1;
+  font-weight: 700;
+  margin: 0;
+  user-select: none;
 `;
 
 const Group = styled(motion.div)`

@@ -125,7 +125,7 @@ ipcMain.handle("open-win", (_, arg) => {
 });
 
 ipcMain.on("login-screen", (event, arg) => {
-  win.setSize(400, 320);
+  win.setSize(400, 400);
 });
 
 ipcMain.on("main-screen", (event, arg) => {
